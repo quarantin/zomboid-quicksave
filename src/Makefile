@@ -1,6 +1,6 @@
 ZOMBOID   := $(HOME)/.steam/steam/steamapps/common/ProjectZomboid/projectzomboid/
 QUICKSAVE := QuickSave.jar
-SCRIPT    := pzquicksave-linux.sh
+SCRIPT    := QuickSave.sh
 
 build:
 	javac -cp "$(ZOMBOID)" zombie/*.java zombie/Lua/*.java && \

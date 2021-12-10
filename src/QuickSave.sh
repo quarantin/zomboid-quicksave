@@ -1,4 +1,5 @@
 #!/bin/bash
+cd "$(dirname "${0}")"
 
 INSTDIR="${HOME}/.steam/steam/steamapps/common/ProjectZomboid/projectzomboid"
 

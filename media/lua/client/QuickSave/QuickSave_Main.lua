@@ -1,24 +1,26 @@
 local module = {}
 
-module.modId = "QuickSave"
-
 module.playerIsDead = false
 
 module.error = function()
-	print("ERROR: " .. module.modId .. ": " ..
-		"You have to install the missing files! " ..
-		"For more information, please visit: " ..
-		"https://github.com/quarantin/zomboid-quicksave#readme"
-	)
+	print("ERROR: QuickSave: There seems to be a problem with the JavaMods loader. " ..
+		"Check here to get help: https://github.com/quarantin/javamods#readme")
+end
+
+module.getLastSave = function()
+	local lastSave = getLatestSave()
+	return lastSave[2] .. getFileSeparator() .. lastSave[1]
 end
 
 module.QuickSave = function()
 
-	if QuickSave and not module.playerIsDead then
-		return QuickSave(module.getLastSave())
+	if not QuickSave then
+		return module.error()
 	end
 
-	module.error()
+	if not module.playerIsDead then
+		return QuickSave(module.getLastSave())
+	end
 end
 
 module.QuickLoad = function()
@@ -28,11 +30,6 @@ module.QuickLoad = function()
 	end
 
 	module.error()
-end
-
-module.getLastSave = function()
-	local lastSave = getLatestSave()
-	return lastSave[2] .. getFileSeparator() .. lastSave[1]
 end
 
 module.OnPlayerDeath = function()

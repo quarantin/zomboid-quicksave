@@ -20,12 +20,29 @@ public class QuickSave extends JavaMod {
 
 	public final static String modId = "QuickSave";
 
+	@Override
 	public List<Class<?>> getExposedClasses() {
 		return null;
 	}
 
+	@Override
 	public List<Object> getGlobalObjects() {
-		return Arrays.asList(new GlobalObject());
+		return Arrays.asList(this);
+	}
+
+	@Override
+	public void startup() {
+		DebugLog.Lua.println("QUICKSAVE STARTUP!");
+	}
+
+	@LuaMethod(name = "QuickSave", global = true)
+	public void QuickSave(String saveDir) {
+		QuickSaveLoad(saveDir, true);
+	}
+
+	@LuaMethod(name = "QuickLoad", global = true)
+	public void QuickLoad(String saveDir) {
+		QuickSaveLoad(saveDir, false);
 	}
 
 	private static String getSavePath() {
@@ -133,18 +150,5 @@ public class QuickSave extends JavaMod {
 			deleteRecursively(outputDir);
 
 		copyRecursively(inputDir, outputDir);
-	}
-
-	public class GlobalObject {
-
-		@LuaMethod(name = "QuickSave", global = true)
-		public void QuickSave(String saveDir) {
-			QuickSaveLoad(saveDir, true);
-		}
-
-		@LuaMethod(name = "QuickLoad", global = true)
-		public void QuickLoad(String saveDir) {
-			QuickSaveLoad(saveDir, false);
-		}
 	}
 }

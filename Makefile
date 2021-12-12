@@ -1,4 +1,4 @@
-NAME      := QuickSave
+NAME      := $(shell grep ^id mod.info | cut -f2 -d=)
 BUNDLE    := dist
 BUNDLEDIR := $(BUNDLE)/$(NAME)
 JAR       := src/$(NAME).jar

@@ -1,7 +1,6 @@
 NAME      := QuickSave
 BUNDLEDIR := dist/$(NAME)
 JAR       := src/$(NAME).jar
-MODSDIR   := $(HOME)/Zomboid/mods
 
 all: bundle
 

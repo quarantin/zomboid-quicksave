@@ -36,12 +36,20 @@ public class QuickSave extends JavaMod {
 
 	@LuaMethod(name = "QuickSave", global = true)
 	public void QuickSave(String saveDir) {
-		QuickSaveLoad(saveDir, true);
+		newSaveThread(saveDir, true);
 	}
 
 	@LuaMethod(name = "QuickLoad", global = true)
 	public void QuickLoad(String saveDir) {
-		QuickSaveLoad(saveDir, false);
+		newSaveThread(saveDir, false);
+	}
+
+	private void newSaveThread(String saveDir, boolean save) {
+		new Thread(new Runnable() {
+			public void run() {
+				QuickSaveLoad(saveDir, save);
+			}
+		}).start();
 	}
 
 	private static void deleteRecursively(File root) {

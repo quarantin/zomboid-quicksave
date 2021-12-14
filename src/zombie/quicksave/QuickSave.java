@@ -15,6 +15,8 @@ import zombie.javamods.Filesystem;
 import zombie.javamods.Log;
 import zombie.javamods.mod.JavaMod;
 
+import zombie.ui.UIManager;
+
 
 public class QuickSave extends JavaMod {
 
@@ -44,10 +46,16 @@ public class QuickSave extends JavaMod {
 		newSaveThread(saveDir, false);
 	}
 
+	private void setGamePaused(boolean paused) {
+		UIManager.getSpeedControls().SetCurrentGameSpeed(paused ? 0 : 1);
+	}
+
 	private void newSaveThread(String saveDir, boolean save) {
 		new Thread(new Runnable() {
 			public void run() {
+				setGamePaused(true);
 				QuickSaveLoad(saveDir, save);
+				setGamePaused(false);
 			}
 		}).start();
 	}
@@ -140,5 +148,6 @@ public class QuickSave extends JavaMod {
 			deleteRecursively(outputDir);
 
 		copyRecursively(inputDir, outputDir);
+		Log.info(modId + ": Done saving " + savePath);
 	}
 }
